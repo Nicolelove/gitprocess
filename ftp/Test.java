@@ -9,7 +9,8 @@ public class Test {
 
 	public static void main(String args[]) throws Exception{
 		
-	    FtpUtil2 ftpUtil=new FtpUtil2();
+	    FtpUtil2 ftpUtil=new FtpUtil2(); 
+		//第一个参数是服务器主机ip,第三个是用户名，第四个是password
 	    ftpUtil.connectServer("", FTPClient.DEFAULT_PORT, "", "", null);
 	    //获得ftp服务器上某一目录名称下的所有文件名称
 	    List<String> list=ftpUtil.getFileList("/abc");
