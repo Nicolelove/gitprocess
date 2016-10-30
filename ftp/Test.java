@@ -10,7 +10,7 @@ public class Test {
 	public static void main(String args[]) throws Exception{
 		
 	    FtpUtil2 ftpUtil=new FtpUtil2();
-	    ftpUtil.connectServer("192.168.11.202", FTPClient.DEFAULT_PORT, "nicole", "ricky141028.", null);
+	    ftpUtil.connectServer("", FTPClient.DEFAULT_PORT, "", "", null);
 	    //获得ftp服务器上某一目录名称下的所有文件名称
 	    List<String> list=ftpUtil.getFileList("/abc");
 	    System.out.println("文件名称列表为:"+list);
