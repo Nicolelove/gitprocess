@@ -20,7 +20,7 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import com.sun.xml.internal.ws.developer.StreamingAttachment;
   
-public class FtpUtil2 {  
+public class FtpUtil1 {  
     private FTPClient ftpClient;  
     public static final int BINARY_FILE_TYPE = FTP.BINARY_FILE_TYPE;  
     public static final int ASCII_FILE_TYPE = FTP.ASCII_FILE_TYPE;  
@@ -243,14 +243,13 @@ public class FtpUtil2 {
         boolean flag = false;  
         InputStream iStream = null;  //建立一个文件输出流对象 
         try { 
-        	System.out.println("url--------->"+remoteFileName);
-        	System.out.println(ftpClient.changeWorkingDirectory("/"));
+//        	System.out.println(ftpClient.changeWorkingDirectory(remoteFileName.substring(0, remoteFileName.lastIndexOf("/"))));
 //        	ftpClient.changeWorkingDirectory(remoteFileName.substring(0, remoteFileName.lastIndexOf("/")));
             iStream = new FileInputStream(localFilePath);  
             //我们可以使用BufferedInputStream进行封装
             //BufferedInputStream bis=new BufferedInputStream(iStream);
             //flag = ftpClient.storeFile(remoteFileName, bis); 
-            flag = ftpClient.storeFile(remoteFileName.substring(remoteFileName.lastIndexOf("/")), iStream);  
+            flag = ftpClient.storeFile(remoteFileName, iStream);  
             if(flag){
                 System.out.println(localFilePath+"  :upload success！");
             }else{
@@ -308,17 +307,16 @@ public class FtpUtil2 {
      * @return
      * @throws IOException
      */
-    public boolean download(String fileDirPath,String remoteFileName, String localFileName)  
+    public boolean download(String ftpWorkUrl,String remoteFileName, String localFileName)  
             throws IOException {  
         boolean flag = false;  
-        //FileOutputStream fos1=new FileOutputStream(localFileName,false);  true表示如果文件已经存在，没执行程序一次便往文件追加一次内容，否则会每一次的执行结果会覆盖文件上一次执行结果
         File outfile = new File(localFileName);  
         OutputStream oStream = null;  
         try {  
-        	//在对ftp服务器非根目录下的文件进行操作的时候一定要先跳转到相应的工作目录下，不然retrieveFile()返回的总是false，如果操作的文件是在根目下就可以省略这一步
-        	ftpClient.changeWorkingDirectory(fileDirPath);  
+        	//在对ftp服务器文件进行操作的时候一定要先跳转到其工作目录下，不然retrieveFile()返回的总是false
+        	ftpClient.changeWorkingDirectory(ftpWorkUrl);  
             oStream = new FileOutputStream(outfile);  
-            //我们可以使用BufferedOutputStream进行封装,封装成具有缓冲功能的文件输出流
+            //我们可以使用BufferedOutputStream进行封装
          	BufferedOutputStream bos=new BufferedOutputStream(oStream);
          	System.out.println("**********");
          	bos.flush();
@@ -328,7 +326,7 @@ public class FtpUtil2 {
          	if(flag){
          		System.out.println("Download success!");
          	}else{
-         		System.out.println(remoteFileName+"  :Download error!");
+         		System.out.println(remoteFileName+"Download error!");
          	}
         } catch (IOException e) {  
             flag = false; 
