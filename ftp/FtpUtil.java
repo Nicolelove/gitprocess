@@ -96,7 +96,7 @@ public class FtpUtil {
     
     /**
      * 转移到FTP服务器工作目录
-     * @param path
+     * @param path  指定工作目录
      * @return
      * @throws IOException
      */
@@ -106,7 +106,7 @@ public class FtpUtil {
     
     /**
      * 在服务器上创建目录
-     * @param pathName pathName 为需要创建的目录名称
+     * @param pathName 需要创建的目录名称
      * @return
      * @throws IOException
      */
@@ -123,7 +123,7 @@ public class FtpUtil {
      * 在服务器上删除目录
      * only can be remove success when the Directory is empty.
      * if not empty ,remove fail
-     * @param path
+     * @param path   指定删除目录
      * @return
      * @throws IOException
      */
@@ -145,7 +145,7 @@ public class FtpUtil {
     
     /**
      * 删除服务器上的文件
-     * @param pathName
+     * @param pathName   指定删除文件目录
      * @return
      * @throws IOException
      */
@@ -174,7 +174,7 @@ public class FtpUtil {
      * 删除所有文件和目录
      * can remove when the direction is not empty 
      * remove both path and content
-     * @param path
+     * @param path   指定将要删除文件的目录
      * @param isAll true:删除所有文件和目录,当参数为false 表示被删除文件夹为空文件夹
      * @return
      * @throws IOException
@@ -219,7 +219,7 @@ public class FtpUtil {
      * 得到文件列表,listFiles返回包含目录和文件，它返回的是一个FTPFile数组
      * listNames()：只包含目录的字符串数组
      * String[] fileNameArr = ftpClient.listNames(path); 
-     * @param path
+     * @param path  指定扫描文件目录
      * @return
      * @throws IOException
      */
@@ -244,13 +244,15 @@ public class FtpUtil {
         return retList;  
     }  
   
-  
     /**
      * 上传文件到ftp服务器
      * 在进行上传和下载文件的时候，设置文件的类型最好是：
      * ftpUtil.setFileType(FtpUtil.BINARY_FILE_TYPE)
-     * localFilePath:本地文件路径和名称
-     * remoteFileName:服务器文件名称
+     * 
+     * @param localFilePath  本地文件路径和名称
+     * @param remoteFileName   服务器文件名称
+     * @return
+     * @throws IOException
      */
     public boolean uploadFile(String localFilePath, String remoteFileName)  
             throws IOException {  
@@ -291,7 +293,7 @@ public class FtpUtil {
   
     /**
      * 上传文件到ftp服务器，上传新的文件名称和原名称一样
-     * @param fileName：文件名称
+     * @param fileName： 指定文件名称
      * @return
      * @throws IOException
      */
@@ -301,7 +303,7 @@ public class FtpUtil {
   
     /**
      * 上传文件到ftp服务器
-     * @param iStream 输入流
+     * @param iStream 指定输入流
      * @param newName 新文件名称
      * @return
      * @throws IOException
@@ -325,8 +327,9 @@ public class FtpUtil {
   
     /**
      * 从ftp服务器上下载文件到本地
-     * @param remoteFileName：ftp服务器上文件名称
-     * @param localFileName：本地文件名称
+     * @param fileDirPath   服务器文件所在路径
+     * @param remoteFileName   下载文件名
+     * @param localFileName   本地存放路径
      * @return
      * @throws IOException
      */
@@ -373,22 +376,22 @@ public class FtpUtil {
         return flag;  
     }  
       
-    /**
-     * 从ftp服务器上下载文件到本地
-     * @param sourceFileName：服务器资源文件名称
-     * @return InputStream 输入流
-     * @throws IOException
-     */
+	/**
+	 * 从ftp服务器上下载文件到本地
+	 * @param sourceFileName   服务器资源文件名称
+	 * @return
+	 * @throws IOException
+	 */
     public InputStream downFile(String sourceFileName) throws IOException {  
         return ftpClient.retrieveFileStream(sourceFileName);  
     }  
-    
-    
-    
-    
-    
-    
-    //上传整个目录到FTP的指定目录中  
+     
+    /**
+     * 上传整个目录到FTP的指定目录中 
+     * @param dirPath  上传文件路径
+     * @param ftpPath   指定上传到ftp的目录
+     * @throws IOException
+     */
 	public void uploadDirFiles(String dirPath, String ftpPath) throws IOException {
 		String path = "";
 		dirPath = replace2Fileseparator(dirPath);
@@ -460,8 +463,8 @@ public class FtpUtil {
     
 	/**
 	 * 下载FTP上的目录结构到本地中 
-	 * @param dirPath
-	 * @param localPath
+	 * @param dirPath   服务器目标文件路径
+	 * @param localPath   本地存入路径
 	 * @throws IOException
 	 */
     public void downloadDirFiles(String dirPath,String localPath) throws IOException{  
